@@ -23,6 +23,7 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "Email already in use" });
     }
 
+    // This will trigger the pre-save hook and hash the password
     const user = await User.create({ name, email, password });
 
     const token = generateToken(user._id);
@@ -46,7 +47,13 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user || !(await user.matchPassword(password))) {
+    // user may be null, or may not have method if model wrong
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
@@ -67,7 +74,6 @@ export const loginUser = async (req, res) => {
 };
 
 export const getMe = async (req, res) => {
-  // `req.user` is set in authMiddleware
   if (!req.user) {
     return res.status(401).json({ message: "Not authorized" });
   }
