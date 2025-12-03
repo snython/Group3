@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
@@ -6,6 +5,11 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import IncidentListPage from "./pages/IncidentListPage.jsx";
 import IncidentFormPage from "./pages/IncidentFormPage.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import UsersPage from "./pages/UsersPage.jsx";
+import MyProfilePage from "./pages/MyProfilePage.jsx";
+import UserProfilePage from "./pages/UserProfilePage.jsx";
+
 
 export default function App() {
   return (
@@ -13,8 +17,28 @@ export default function App() {
       <Navbar />
       <main className="main-content">
         <Routes>
+          <Route path="/" element={<HomePage />} />
+
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+
+          <Route
+            path="/users"
+            element={
+              <ProtectedRoute>
+                <UsersPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <MyProfilePage />
+              </ProtectedRoute>
+            }
+          />
 
           <Route
             path="/incidents"
@@ -24,8 +48,6 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
-          {/* CREATE */}
           <Route
             path="/incidents/new"
             element={
@@ -34,8 +56,6 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
-          {/* EDIT */}
           <Route
             path="/incidents/:id/edit"
             element={
@@ -45,7 +65,24 @@ export default function App() {
             }
           />
 
-          <Route path="*" element={<Navigate to="/incidents" />} />
+<Route
+  path="/users"
+  element={
+    <ProtectedRoute>
+      <UsersPage />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/users/:id"
+  element={
+    <ProtectedRoute>
+      <UserProfilePage />
+    </ProtectedRoute>
+  }
+/>
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
     </div>

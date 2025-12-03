@@ -31,9 +31,17 @@ body {
   margin-right: 1rem;
 }
 
-.navbar a:hover {
-  text-decoration: underline;
+.navbar a.active {
+  text-decoration: underline; 
+  font-weight: 600;
 }
+
+.navbar-user {
+  margin-right: 0.75rem;
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
 
 .navbar .logo {
   font-weight: 600;

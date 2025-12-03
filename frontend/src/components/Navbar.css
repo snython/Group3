@@ -1,0 +1,109 @@
+/* NAVBAR BASE */
+.cb-navbar {
+  width: 100%;
+  background: #2f3a69; /* professional dark navy */
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* LEFT SECTION */
+.cb-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* LOGO / BRAND */
+.cb-logo {
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: bold;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* LINKS */
+.cb-navbar a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.cb-navbar a:hover {
+  text-decoration: underline;
+}
+
+.cb-navbar a.active {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* RIGHT SECTION */
+.cb-navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* BUTTONS */
+.cb-btn-primary {
+  background: #1a73e8;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+}
+
+.cb-btn-secondary {
+  background: #ffffff;
+  color: #2f3a69;
+  border: none;
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cb-btn-secondary:hover {
+  background: #e1e4ed;
+}
+
+.cb-user {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.cb-home-icon {
+  color: #ffffff;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.cb-home-icon:hover {
+  color: #dbeafe; /* light blue on hover */
+}
+
+.cb-home-icon.active {
+  color: #93c5fd; /* highlighted when on home page */
+}
+
+.cb-home-icon {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.cb-home-icon:hover {
+  color: #dbeafe; /* light blue on hover */
+}
+
+.cb-home-icon.active {
+  color: #93c5fd; /* active state */
+}

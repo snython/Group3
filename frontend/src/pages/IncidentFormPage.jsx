@@ -6,6 +6,7 @@ import api from "../api/axios";
 export default function IncidentFormPage({ mode = "create" }) {
   const navigate = useNavigate();
   const { id } = useParams();
+
   const isEdit = mode === "edit" && id;
 
   const [form, setForm] = useState({
@@ -13,7 +14,7 @@ export default function IncidentFormPage({ mode = "create" }) {
     description: "",
     priority: "Low",
     status: "Open",
-    assignedTo: ""
+    assignedTo: "",
   });
 
   const [loading, setLoading] = useState(isEdit);
@@ -23,15 +24,17 @@ export default function IncidentFormPage({ mode = "create" }) {
   useEffect(() => {
     const loadIncident = async () => {
       if (!isEdit) return;
+
       try {
         setLoading(true);
         const res = await api.get(`/incidents/${id}`);
+
         setForm({
           title: res.data.title || "",
           description: res.data.description || "",
           priority: res.data.priority || "Low",
           status: res.data.status || "Open",
-          assignedTo: res.data.assignedTo || ""
+          assignedTo: res.data.assignedTo || "",
         });
       } catch (err) {
         console.error("Error loading incident", err);
@@ -44,8 +47,12 @@ export default function IncidentFormPage({ mode = "create" }) {
     loadIncident();
   }, [isEdit, id]);
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,11 +64,13 @@ export default function IncidentFormPage({ mode = "create" }) {
       } else {
         await api.post("/incidents", form);
       }
+
       navigate("/incidents");
     } catch (err) {
       console.error("Error saving incident", err);
       setError(
-        err.response?.data?.message || "Something went wrong while saving."
+        err.response?.data?.message ||
+          "Something went wrong while saving the incident."
       );
     }
   };
@@ -106,18 +115,18 @@ export default function IncidentFormPage({ mode = "create" }) {
             value={form.priority}
             onChange={handleChange}
           >
-            <option>Low</option>
-            <option>Medium</option>
-            <option>High</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
           </select>
         </label>
 
         <label>
           Status
           <select name="status" value={form.status} onChange={handleChange}>
-            <option>Open</option>
-            <option>In Progress</option>
-            <option>Resolved</option>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Closed">Closed</option>
           </select>
         </label>
 
