@@ -10,6 +10,9 @@ export default function MyProfilePage() {
   const [message, setMessage] = useState("");
 
   
+  const [role, setRole] = useState("Employee");
+  const [onboardingRequired, setOnboardingRequired] = useState(true);
+
   const [incidentStats, setIncidentStats] = useState({
     reported: 0,
     resolved: 0,
@@ -20,11 +23,22 @@ export default function MyProfilePage() {
     const loadProfile = async () => {
       try {
         const res = await api.get("/auth/me");
-        setProfile(res.data);
+        const data = res.data;
+
+        setProfile(data);
+
         setForm({
-          name: res.data.name || "",
-          email: res.data.email || "",
+          name: data.name || "",
+          email: data.email || "",
         });
+
+        
+        setRole(data.role || "Employee");
+        setOnboardingRequired(
+          typeof data.onboardingRequired === "boolean"
+            ? data.onboardingRequired
+            : true
+        );
       } catch (err) {
         console.error("Error loading profile", err);
       }
@@ -58,8 +72,23 @@ export default function MyProfilePage() {
     setSaving(true);
     setMessage("");
     try {
-      // assumes PUT /users/:id exists
-      await api.put(`/users/${profile._id}`, form);
+      
+      await api.put(`/users/${profile._id}`, {
+        ...form,
+        role,
+        onboardingRequired,
+      });
+
+      
+      
+      setProfile((prev) => ({
+        ...prev,
+        name: form.name,
+        email: form.email,
+        role,
+        onboardingRequired,
+      }));
+
       setMessage("Profile updated successfully.");
     } catch (err) {
       console.error("Error updating profile", err);
@@ -138,12 +167,19 @@ export default function MyProfilePage() {
                 <button
                   className="profile-cancel-btn"
                   type="button"
-                  onClick={() =>
+                  onClick={() => {
+                    // reset to last known profile values
                     setForm({
                       name: profile.name || "",
                       email: profile.email || "",
-                    })
-                  }
+                    });
+                    setRole(profile.role || "Employee");
+                    setOnboardingRequired(
+                      typeof profile.onboardingRequired === "boolean"
+                        ? profile.onboardingRequired
+                        : true
+                    );
+                  }}
                 >
                   Cancel
                 </button>
@@ -159,10 +195,14 @@ export default function MyProfilePage() {
             <h2>Role</h2>
             <label>
               Role
-              <select defaultValue="Employee">
-                <option>Employee</option>
-                <option>Manager</option>
-                <option>Admin</option>
+            
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+                <option value="Admin">Admin</option>
               </select>
             </label>
 
@@ -170,7 +210,14 @@ export default function MyProfilePage() {
             <div className="profile-onboarding-row">
               <span>Onboarding required</span>
               <label className="profile-switch">
-                <input type="checkbox" defaultChecked />
+                
+                <input
+                  type="checkbox"
+                  checked={onboardingRequired}
+                  onChange={(e) =>
+                    setOnboardingRequired(e.target.checked)
+                  }
+                />
                 <span className="profile-slider"></span>
               </label>
             </div>
@@ -180,7 +227,6 @@ export default function MyProfilePage() {
               <span className="profile-percent">84%</span>
             </div>
 
-            
             <div className="profile-onboarding-row">
               <span>Incidents Resolved</span>
               <span className="profile-percent">
@@ -200,9 +246,3 @@ export default function MyProfilePage() {
     </div>
   );
 }
-
-
-
-
-
-

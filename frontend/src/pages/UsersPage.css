@@ -112,3 +112,39 @@
 .users-name-link:hover {
   text-decoration: underline;
 }
+
+/* Back button container */
+.back-button-container {
+  max-width: 900px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Premium pill-style back button */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  color: #475569;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(148, 163, 184, 0.25);
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(148, 163, 184, 0.35);
+}
+
+/* Arrow styling */
+.back-button .arrow {
+  font-size: 1.1rem;
+  margin-right: 2px;
+}
