@@ -20,6 +20,16 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 6,
     },
+
+    role: {
+  type: String,
+  default: "Employee",
+},
+
+onboardingRequired: {
+  type: Boolean,
+  default: true,
+},
   },
   { timestamps: true }
 );
@@ -36,5 +46,7 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.matchPassword = async function (entered) {
   return bcrypt.compare(entered, this.password);
 };
+
+
 
 module.exports = mongoose.model("User", userSchema); // collection: users

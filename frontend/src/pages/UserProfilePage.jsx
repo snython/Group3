@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";   // ⬅ added useNavigate
 import api from "../api/axios";
 import "./UserProfilePage.css";
 
 export default function UserProfilePage() {
   const { id } = useParams();
+  const navigate = useNavigate();    // ⬅ initialize navigation
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -56,6 +57,18 @@ export default function UserProfilePage() {
 
   return (
     <div className="user-profile-page">
+
+      {/* ░░ BACK TO SEARCH BUTTON ░░ */}
+      <div className="back-button-container">
+        <button
+          className="back-button"
+          onClick={() => navigate("/users")} // Or navigate(-1)
+        >
+          <span className="arrow">←</span> Back to User Search
+        </button>
+      </div>
+
+      {/* Existing Profile Card */}
       <div className="user-profile-card">
         <div className="user-profile-header">
           <div className="user-profile-avatar">{initial}</div>

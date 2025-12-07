@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage.jsx";
 import UsersPage from "./pages/UsersPage.jsx";
 import MyProfilePage from "./pages/MyProfilePage.jsx";
 import UserProfilePage from "./pages/UserProfilePage.jsx";
+import IncidentDetailPage from "./pages/IncidentDetailPage.jsx";
 
 
 export default function App() {
@@ -40,6 +41,9 @@ export default function App() {
             }
           />
 
+         
+
+
           <Route
             path="/incidents"
             element={
@@ -65,6 +69,15 @@ export default function App() {
             }
           />
 
+          <Route
+  path="/incidents/:id/view"
+  element={
+    <ProtectedRoute>
+      <IncidentDetailPage />
+    </ProtectedRoute>
+  }
+/>
+
 <Route
   path="/users"
   element={
@@ -81,6 +94,8 @@ export default function App() {
       <UserProfilePage />
     </ProtectedRoute>
   }
+
+  
 />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

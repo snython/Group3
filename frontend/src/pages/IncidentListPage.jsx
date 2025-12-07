@@ -68,7 +68,15 @@ export default function IncidentListPage() {
                     style={{ marginRight: "0.5rem" }}
                   >
                     Edit
+               
                   </Link>
+                       <Link
+     to={`/incidents/${i._id}/view`}
+  className="btn btn-secondary"
+  style={{ marginRight: "0.5rem" }}
+>
+  View
+</Link>
                   <button onClick={() => handleDelete(i._id)}>Delete</button>
                 </td>
               </tr>
