@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: catalyst-bench-frontend
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://group3-xrxh.onrender.com/api
+        sync: false
+
